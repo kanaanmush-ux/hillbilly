@@ -23,5 +23,5 @@ else:
     print("password or email does nt match")    
 
 dummy_email = "new@yahoo.com"
-
+dummy_password = "dummy135"
 
