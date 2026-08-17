@@ -13,7 +13,7 @@
 
 dummy_email = "user@example.com"
 dummy_password ="password123"
-
+print(type(dummy_password))
 email = input("Enter your email: ")
 password = input("Enter your password: ")
 
@@ -23,4 +23,5 @@ else:
     print("password or email does nt match")    
 
 dummy_email = "new@yahoo.com"
-    
+
+
