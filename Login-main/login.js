@@ -1,37 +1,13 @@
-// Select the elements once. Variables make the event handlers easy to read.
-const form = document.querySelector('#login-form');
-const emailInput = document.querySelector('#email');
+const views = { 'sign-in': document.querySelector('#sign-in-view'), forgot: document.querySelector('#forgot-password-view'), confirmation: document.querySelector('#confirmation-view') };
+const loginForm = document.querySelector('#login-form');
+const resetForm = document.querySelector('#forgot-password-form');
 const passwordInput = document.querySelector('#password');
 const passwordToggle = document.querySelector('.toggle-password');
-const submitButton = document.querySelector('.submit');
-
-// This button does not submit the form. It changes the password field between
-// "password" (dots) and "text" (visible characters). ARIA keeps the control clear
-// for screen-reader users too.
-passwordToggle.addEventListener('click', () => {
-  const passwordIsHidden = passwordInput.type === 'password';
-  passwordInput.type = passwordIsHidden ? 'text' : 'password';
-  passwordToggle.setAttribute('aria-pressed', String(passwordIsHidden));
-  passwordToggle.setAttribute('aria-label', passwordIsHidden ? 'Hide password' : 'Show password');
-});
-
-// A teaching demo must not send real credentials. After built-in validation succeeds,
-// the button briefly changes state to show where a real sign-in request would begin.
-// In production, replace the timeout with a secure HTTPS request; never log passwords.
-form.addEventListener('submit', (event) => {
-  event.preventDefault();
-  if (!form.checkValidity()) {
-    form.reportValidity(); // Browser identifies the first invalid field.
-    return;
-  }
-  submitButton.disabled = true;
-  submitButton.classList.add('is-submitting');
-  submitButton.textContent = 'Signing In...';
-
-  // This is visual feedback only, not authentication.
-  window.setTimeout(() => {
-    submitButton.disabled = false;
-    submitButton.classList.remove('is-submitting');
-    submitButton.textContent = 'Sign In';
-  }, 900);
-});
+const submittedEmail = document.querySelector('#submitted-email');
+function showView(name) { Object.entries(views).forEach(([key, view]) => { view.hidden = key !== name; }); history.replaceState(null, '', name === 'sign-in' ? '#sign-in' : `#${name}`); }
+document.querySelectorAll('[data-view]').forEach((link) => link.addEventListener('click', (event) => { event.preventDefault(); showView(link.dataset.view); }));
+passwordToggle.addEventListener('click', () => { const hidden = passwordInput.type === 'password'; passwordInput.type = hidden ? 'text' : 'password'; passwordToggle.setAttribute('aria-pressed', String(hidden)); passwordToggle.setAttribute('aria-label', hidden ? 'Hide password' : 'Show password'); });
+loginForm.addEventListener('submit', (event) => { event.preventDefault(); if (!loginForm.reportValidity()) return; const button = loginForm.querySelector('.submit'); button.disabled = true; button.textContent = 'Signing In...'; window.setTimeout(() => { button.disabled = false; button.textContent = 'Sign In'; }, 900); });
+resetForm.addEventListener('submit', (event) => { event.preventDefault(); if (!resetForm.reportValidity()) return; submittedEmail.textContent = document.querySelector('#reset-email').value; showView('confirmation'); });
+document.querySelector('#resend-button').addEventListener('click', () => showView('forgot'));
+showView(location.hash === '#forgot' ? 'forgot' : 'sign-in');

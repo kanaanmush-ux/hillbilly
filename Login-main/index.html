@@ -1,16 +1,35 @@
 <!doctype html>
-<html lang="<!-- figma:lang -->">
+<html lang="en">
   <head>
-    <!-- figma:head-start -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><!-- figma:title --></title>
-    <!-- figma:head-end -->
+    <meta name="description" content="Sign in or reset your K.M. Awareness password." />
+    <title>K.M. Awareness</title>
+    <link rel="stylesheet" href="login.css" />
   </head>
   <body>
-    <!-- figma:body-start -->
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-    <!-- figma:body-end -->
+    <main class="auth-card" aria-live="polite">
+      <img class="logo" src="km-logo-circular-badge.png" alt="K.M. Awareness logo" />
+      <section id="sign-in-view" class="auth-view" aria-labelledby="sign-in-title">
+        <header class="intro"><h1 id="sign-in-title">Welcome Back</h1><p>Sign in to continue</p></header>
+        <form id="login-form">
+          <label class="sr-only" for="login-email">Email address</label>
+          <div class="field"><svg class="field-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="4" width="19" height="16" rx="1.5"></rect><path d="m3.5 5.5 8.5 7 8.5-7M3.5 18.5l6.4-6M20.5 18.5l-6.4-6"></path></svg><input id="login-email" type="email" placeholder="Enter Email" autocomplete="email" required /></div>
+          <label class="sr-only" for="password">Password</label>
+          <div class="field"><svg class="field-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3"></path></svg><input id="password" type="password" placeholder="Enter Password" autocomplete="current-password" required /><button class="toggle-password" type="button" aria-label="Show password" aria-pressed="false"><svg class="eye" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12s3.4-6 9.5-6 9.5 6 9.5 6-3.4 6-9.5 6-9.5-6-9.5-6Z"></path><circle cx="12" cy="12" r="2.8"></circle></svg></button></div>
+          <div class="options"><label class="remember"><input id="remember" type="checkbox" /><span>Remember Me</span></label><a href="#forgot" data-view="forgot">Forgot Password?</a></div>
+          <button class="submit" type="submit">Sign In</button>
+        </form>
+      </section>
+      <section id="forgot-password-view" class="auth-view" hidden aria-labelledby="forgot-title">
+        <header class="intro"><h1 id="forgot-title">Forgot Password?</h1><p>No worries, we'll send you reset instructions.</p></header>
+        <form id="forgot-password-form"><label class="sr-only" for="reset-email">Email address</label><div class="field"><svg class="field-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="4" width="19" height="16" rx="1.5"></rect><path d="m3.5 5.5 8.5 7 8.5-7M3.5 18.5l6.4-6M20.5 18.5l-6.4-6"></path></svg><input id="reset-email" type="email" placeholder="Enter Email" autocomplete="email" required /></div><button class="submit" type="submit">Reset Password</button></form>
+        <a class="back-link" href="#sign-in" data-view="sign-in">&larr; Back to Sign In</a>
+      </section>
+      <section id="confirmation-view" class="auth-view confirmation" hidden aria-labelledby="confirmation-title">
+        <div class="success-icon" aria-hidden="true">&#10003;</div><h1 id="confirmation-title">Check Your Email!</h1><p>We sent a password reset link to<br /><span id="submitted-email"></span></p><button id="resend-button" class="submit" type="button">Resend Email</button><a class="back-link" href="#sign-in" data-view="sign-in">&larr; Back to Sign In</a>
+      </section>
+    </main>
+    <script src="login.js"></script>
   </body>
 </html>
